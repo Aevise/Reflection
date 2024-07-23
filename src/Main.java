@@ -1,7 +1,17 @@
+import interfaceAnalyzer.InterfaceAnalyzer;
+
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
+
+        Set<Class<?>> allImplementedInterfaces = InterfaceAnalyzer.findAllImplementedInterfaces(Collection.class);
+        System.out.println(allImplementedInterfaces);
+        System.out.println("-----------------------");
+        Set<Class<?>> allImplementedInterfaces1 = InterfaceAnalyzer.findAllImplementedInterfaces(ListIterator.class);
+        System.out.println(allImplementedInterfaces1);
+        System.out.println("-----------------------");
+
         Class<String> stringClass = String.class;
 
         List<String> names = new ArrayList<>();
@@ -21,6 +31,8 @@ public class Main {
         Class<? extends Map> aClass = map.getClass();
 
         Class<?> squareClass = Class.forName("Main$Square");
+
+        Class<Comparable> comparableClass = Comparable.class;
 
         printClassInfo(stringClass, aClass, squareClass);
 
