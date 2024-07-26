@@ -1,33 +1,54 @@
 package methods;
 
+import methods.data.ClothingProduct;
 import methods.data.Product;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BasicTestFramework {
     public static void main(String[] args) {
-        testGetters(Product.class);
+        testGetters(ClothingProduct.class);
+        testSetters(ClothingProduct.class);
+    }
+
+    public static void testSetters(Class<?> dataClass){
+        List<Field> allFields = getAllFields(dataClass);
+
+        for (Field field : allFields) {
+            String setterName = "set" + capitalizeFirstLetter(field.getName());
+
+            Method setterMethod = null;
+            try {
+                setterMethod = dataClass.getMethod(setterName, field.getType());
+            } catch (NoSuchMethodException e) {
+                throw new IllegalStateException(String.format("Setter: %s not found", setterName));
+            }
+
+            if(!setterMethod.getReturnType().equals(void.class)){
+                throw new IllegalStateException(String.format("Setter method: %s has to return void", setterName));
+            }
+        }
+
     }
 
     public static void testGetters(Class<?> dataClass) {
-        Field[] declaredFields = dataClass.getDeclaredFields();
+        List<Field> allFields = getAllFields(dataClass);
 
         Map<String, Method> methodMap = mapMethodNameToMethod(dataClass);
 
-        for (Field declaredField : declaredFields) {
-            String getterName = "get" + capitalizeFirstLetter(declaredField.getName());
+        for (Field field : allFields) {
+            String getterName = "get" + capitalizeFirstLetter(field.getName());
 
             if (!methodMap.containsKey(getterName)) {
-                throw new IllegalStateException(String.format("Field: %s does not have a getter method", declaredField.getName()));
+                throw new IllegalStateException(String.format("Field: %s does not have a getter method", field.getName()));
             }
 
             Method getter = methodMap.get(getterName);
-            if (!getter.getReturnType().equals(declaredField.getType())) {
+            if (!getter.getReturnType().equals(field.getType())) {
                 throw new IllegalStateException(String.format("Getter method: %s has return type %s, but expected: %s",
-                        getter.getName(), getter.getReturnType().getTypeName(), declaredField.getType().getTypeName()));
+                        getter.getName(), getter.getReturnType().getTypeName(), field.getType().getTypeName()));
             }
 
             if (getter.getParameterCount() > 0) {
@@ -35,6 +56,22 @@ public class BasicTestFramework {
             }
 
         }
+    }
+
+    private static List<Field> getAllFields(Class<?> clazz){
+        if(clazz == null || clazz.equals(Object.class)){
+            return List.of();
+        }
+        List<Field> allFields = new ArrayList<>();
+
+        Field[] classFields = clazz.getDeclaredFields();
+        List<Field> superClassFields = getAllFields(clazz.getSuperclass());
+
+        allFields.addAll(Arrays.asList(classFields));
+        allFields.addAll(superClassFields);
+
+        return allFields;
+
     }
 
     private static String capitalizeFirstLetter(String name) {

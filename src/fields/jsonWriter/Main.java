@@ -7,6 +7,7 @@ import fields.jsonWriter.data.Movie;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
@@ -37,6 +38,12 @@ public class Main {
             field.setAccessible(true);
 
             if(field.isSynthetic()){
+                continue;
+            }
+
+            int modifiers = field.getModifiers();
+
+            if(Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers)){
                 continue;
             }
 
