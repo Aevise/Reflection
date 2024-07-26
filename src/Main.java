@@ -1,9 +1,14 @@
 import interfaceAnalyzer.InterfaceAnalyzer;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.*;
 
+import static annotations.Main.initialize;
+
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, IOException, URISyntaxException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         Set<Class<?>> allImplementedInterfaces = InterfaceAnalyzer.findAllImplementedInterfaces(Collection.class);
         System.out.println(allImplementedInterfaces);
@@ -37,6 +42,7 @@ public class Main {
         printClassInfo(stringClass, aClass, squareClass);
 
         System.out.println("----------------------------");
+
         var circleObject = new Drawable() {
             @Override
             public int getNumberOfCorners() {
@@ -45,6 +51,8 @@ public class Main {
         };
 
         printClassInfo(Collection.class, boolean.class, int[][].class, Color.class, circleObject.getClass());
+
+        System.out.println("+++++++++++++------------------+++++++++++++++");
     }
 
     private static void printClassInfo(Class<?> ... classes){
