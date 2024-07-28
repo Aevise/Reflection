@@ -50,7 +50,7 @@ public class Main {
                 groupExecutors(List.of(databaseClient, httpClient1, httpClient2, fileLogger, udpClient),
                         methodParameterTypes);
 
-        executeAll(requestExecutors,requestBody);
+        executeAll(requestExecutors, requestBody);
     }
 
     public static void executeAll(Map<Object, Method> requestExecutors, String requestBody) throws Throwable {
@@ -66,19 +66,19 @@ public class Main {
                 }
             }
             //getting direct information about exception
-        }catch (InvocationTargetException e){
+        } catch (InvocationTargetException e) {
             throw e.getTargetException();
         }
     }
 
-    public static Map<Object, Method> groupExecutors(List<Object> requestExecutors, List<Class<?>> methodParametersType){
+    public static Map<Object, Method> groupExecutors(List<Object> requestExecutors, List<Class<?>> methodParametersType) {
         Map<Object, Method> instanceToMethod = new HashMap<>();
 
         for (Object requestExecutor : requestExecutors) {
             Method[] declaredMethods = requestExecutor.getClass().getDeclaredMethods();
 
             for (Method declaredMethod : declaredMethods) {
-                if(Arrays.asList(declaredMethod.getParameterTypes()).equals(methodParametersType)){
+                if (Arrays.asList(declaredMethod.getParameterTypes()).equals(methodParametersType)) {
                     instanceToMethod.put(requestExecutor, declaredMethod);
                 }
             }

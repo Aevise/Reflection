@@ -1,8 +1,8 @@
 package annotations.test.databases;
 
-import annotations.annotations.InitializerClass;
-import annotations.annotations.InitializerMethod;
-import annotations.annotations.RetryOperation;
+import annotations.test.annotations.InitializerClass;
+import annotations.test.annotations.InitializerMethod;
+import annotations.test.annotations.RetryOperation;
 
 import java.io.IOException;
 

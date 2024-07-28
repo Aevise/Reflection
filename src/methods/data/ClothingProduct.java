@@ -1,6 +1,6 @@
 package methods.data;
 
-public class ClothingProduct extends Product{
+public class ClothingProduct extends Product {
     private Size size;
     private String color;
 

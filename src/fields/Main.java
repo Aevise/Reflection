@@ -38,7 +38,7 @@ public class Main {
         }
     }
 
-    public static void printDeclaredFieldsInfo(Class<?> clazz){
+    public static void printDeclaredFieldsInfo(Class<?> clazz) {
         for (Field declaredField : clazz.getDeclaredFields()) {
             System.out.printf("Field name: %s type: %s\n",
                     declaredField.getName(),
@@ -53,7 +53,7 @@ public class Main {
         }
     }
 
-    public static void printFieldsInfo(Class<?> clazz){
+    public static void printFieldsInfo(Class<?> clazz) {
         for (Field declaredField : clazz.getFields()) {
             System.out.printf("Field name: %s\ntype: %s\n",
                     declaredField.getName(),
@@ -66,7 +66,13 @@ public class Main {
         }
     }
 
-    public static class Movie extends Product{
+    public enum Category {
+        ADVENTURE,
+        ACTION,
+        COMEDY
+    }
+
+    public static class Movie extends Product {
         public static final double MINIMUM_PRICE = 10.99;
 
         private boolean isReleased;
@@ -80,20 +86,20 @@ public class Main {
             this.actualPrice = Math.max(price, MINIMUM_PRICE);
         }
 
-        public class MovieStats{
+        public class MovieStats {
             private double timesWatched;
 
             public MovieStats(double timesWatched) {
                 this.timesWatched = timesWatched;
             }
 
-            public double getRevenue(){
+            public double getRevenue() {
                 return timesWatched * actualPrice;
             }
         }
     }
 
-    public static class Product{
+    public static class Product {
         protected String name;
         protected int year;
         protected double actualPrice;
@@ -102,11 +108,5 @@ public class Main {
             this.name = name;
             this.year = year;
         }
-    }
-
-    public enum Category{
-        ADVENTURE,
-        ACTION,
-        COMEDY
     }
 }

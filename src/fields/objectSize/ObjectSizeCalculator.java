@@ -12,24 +12,24 @@ public class ObjectSizeCalculator {
         System.out.println(asere);
     }
 
-    public long sizeOfObject(Object input) throws IllegalAccessException{
+    public long sizeOfObject(Object input) throws IllegalAccessException {
         long objectSize = HEADER_SIZE + REFERENCE_SIZE;
         Field[] declaredFields = input.getClass().getDeclaredFields();
 
-        for(Field field : declaredFields){
+        for (Field field : declaredFields) {
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
 
-            if(field.isSynthetic()){
+            if (field.isSynthetic()) {
                 continue;
             }
 
 
-            if(fieldType.isPrimitive()){
+            if (fieldType.isPrimitive()) {
                 objectSize += sizeOfPrimitiveType(fieldType);
-            }else if(fieldType.equals(String.class)){
+            } else if (fieldType.equals(String.class)) {
                 objectSize += sizeOfString((String) field.get(input));
-            }else{
+            } else {
                 objectSize += sizeOfObject(field.get(input));
             }
         }

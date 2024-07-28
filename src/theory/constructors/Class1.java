@@ -1,7 +1,5 @@
 package theory.constructors;
 
-import interfaceAnalyzer.InterfaceAnalyzer;
-
 public class Class1 {
 
     String name;

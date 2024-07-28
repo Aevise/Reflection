@@ -27,7 +27,7 @@ public class Constructors {
         }
 
         Constructor<Class1> constructor = Class1.class.getConstructor(String.class);
-        System.out.println("Result of getting given constructor: " +  constructor);
+        System.out.println("Result of getting given constructor: " + constructor);
 //        Constructor<Class1> constructor1 = Class1.class.getConstructor();
 //        Constructor<Class2> constructor2 = Class2.class.getConstructor();
 
@@ -42,7 +42,7 @@ public class Constructors {
         System.out.println(instanceWithArguments);
     }
 
-    public static void printConstructorData(Class<?> clazz){
+    public static void printConstructorData(Class<?> clazz) {
         Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
         System.out.printf("Class %s has %d declared constructors:\n", clazz.getSimpleName(), declaredConstructors.length);
         for (Constructor<?> declaredConstructor : declaredConstructors) {
@@ -54,9 +54,9 @@ public class Constructors {
         }
     }
 
-    public static <T>T createInstanceWithArguments(Class<T> clazz, Object ... args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static <T> T createInstanceWithArguments(Class<T> clazz, Object... args) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         for (Constructor<?> declaredConstructor : clazz.getDeclaredConstructors()) {
-            if(declaredConstructor.getParameterTypes().length == args.length){
+            if (declaredConstructor.getParameterTypes().length == args.length) {
                 return (T) declaredConstructor.newInstance(args);
             }
         }
@@ -64,12 +64,13 @@ public class Constructors {
         return null;
     }
 
-    public static class Person{
+    public static class Person {
 
         private final int age;
 
         private final Address address;
         private final String name;
+
         public Person() {
             this.name = "anonymous";
             this.age = 0;
@@ -104,7 +105,7 @@ public class Constructors {
         }
     }
 
-    public static class Address{
+    public static class Address {
         private String street;
         private int number;
 

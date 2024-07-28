@@ -7,11 +7,11 @@ public class ServerConfiguration {
     private final InetSocketAddress serverAddress;
     private final String greetingsMessage;
 
-    private ServerConfiguration(int port, String greetingsMessage){
+    private ServerConfiguration(int port, String greetingsMessage) {
         this.greetingsMessage = greetingsMessage;
         this.serverAddress = new InetSocketAddress("localhost", port);
 
-        if(serverConfigurationInstance == null){
+        if (serverConfigurationInstance == null) {
             serverConfigurationInstance = this;
         }
     }

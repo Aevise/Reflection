@@ -1,17 +1,17 @@
 package annotations.test.databases;
 
-import annotations.annotations.InitializerClass;
-import annotations.annotations.InitializerMethod;
+import annotations.test.annotations.InitializerClass;
+import annotations.test.annotations.InitializerMethod;
 
 @InitializerClass
 public class CacheLoader {
 
     @InitializerMethod
-    public void loadCache(){
+    public void loadCache() {
         System.out.println("Loading data from cache");
     }
 
-    public void reloadCache(){
+    public void reloadCache() {
         System.out.println("Reload cache");
     }
 }

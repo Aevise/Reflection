@@ -37,13 +37,13 @@ public class Main {
             Field field = declaredFields[i];
             field.setAccessible(true);
 
-            if(field.isSynthetic()){
+            if (field.isSynthetic()) {
                 continue;
             }
 
             int modifiers = field.getModifiers();
 
-            if(Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers)){
+            if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers)) {
                 continue;
             }
 
@@ -53,18 +53,17 @@ public class Main {
             stringBuilder.append(":");
 
             Class<?> fieldType = field.getType();
-            if(fieldType.isPrimitive()){
+            if (fieldType.isPrimitive()) {
                 stringBuilder.append(formatPrimitiveValue(field.get(instance), fieldType));
-            }else if(fieldType.equals(String.class)){
+            } else if (fieldType.equals(String.class)) {
                 stringBuilder.append(formatStringValue(field.get(instance).toString()));
-            }else if(fieldType.isArray()){
+            } else if (fieldType.isArray()) {
                 stringBuilder.append(arrayToJson(field.get(instance), indentSize + 1));
-            }
-            else {
+            } else {
                 stringBuilder.append(objectToJson(field.get(instance), indentSize + 1));
             }
 
-            if(i != declaredFields.length - 1){
+            if (i != declaredFields.length - 1) {
                 stringBuilder.append(",");
             }
             stringBuilder.append("\n");
@@ -87,17 +86,17 @@ public class Main {
         for (int i = 0; i < arrayLength; i++) {
             Object element = Array.get(arrayInstance, i);
 
-            if(componentType.isPrimitive()){
+            if (componentType.isPrimitive()) {
                 stringBuilder.append(indent(indentSize + 1));
                 stringBuilder.append(formatPrimitiveValue(element, componentType));
-            } else if(componentType.equals(String.class)){
+            } else if (componentType.equals(String.class)) {
                 stringBuilder.append(indent(indentSize + 1));
                 stringBuilder.append(formatStringValue(element.toString()));
-            }else {
+            } else {
                 stringBuilder.append(objectToJson(element, indentSize + 1));
             }
 
-            if( i != arrayLength - 1){
+            if (i != arrayLength - 1) {
                 stringBuilder.append(", ");
             }
             stringBuilder.append("\n");
@@ -106,22 +105,22 @@ public class Main {
         return stringBuilder.toString();
     }
 
-    private static String indent(int indentSize){
+    private static String indent(int indentSize) {
         return "\t".repeat(Math.max(0, indentSize));
     }
 
-    private static String formatStringValue(String value){
+    private static String formatStringValue(String value) {
         return String.format("\"%s\"", value);
     }
 
     private static String formatPrimitiveValue(Object instance, Class<?> type) {
-        if(type.equals(boolean.class)
-        || type.equals(int.class)
-        || type.equals(long.class)
-        || type.equals(short.class)
-        ){
+        if (type.equals(boolean.class)
+                || type.equals(int.class)
+                || type.equals(long.class)
+                || type.equals(short.class)
+        ) {
             return instance.toString();
-        }else if(type.equals(double.class) || type.equals(float.class)){
+        } else if (type.equals(double.class) || type.equals(float.class)) {
             return String.format("%.02f", instance);
         }
         throw new RuntimeException(String.format("Type: %s is not supported", type.getName()));

@@ -5,8 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static annotations.Main.initialize;
-
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, IOException, URISyntaxException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
@@ -29,7 +27,7 @@ public class Main {
 
         String name = aClass1.getPackage().getName();
         String packageName = aClass1.getPackageName();
-        System.out.println(name +"    " + packageName);
+        System.out.println(name + "    " + packageName);
 
 
         Map<String, Integer> map = new HashMap<>();
@@ -55,7 +53,7 @@ public class Main {
         System.out.println("+++++++++++++------------------+++++++++++++++");
     }
 
-    private static void printClassInfo(Class<?> ... classes){
+    private static void printClassInfo(Class<?>... classes) {
         for (Class<?> aclass : classes) {
             System.out.printf("Class name: [%s], class package: [%s]%n", aclass.getSimpleName(), aclass.getPackageName());
 
@@ -74,20 +72,20 @@ public class Main {
 
     }
 
-    private static class Square implements Drawable {
-        @Override
-        public int getNumberOfCorners() {
-            return 4;
-        }
+    private enum Color {
+        BLUE,
+        RED,
+        GREEN
     }
 
     private static interface Drawable {
         int getNumberOfCorners();
     }
 
-    private enum Color {
-        BLUE,
-        RED,
-        GREEN
+    private static class Square implements Drawable {
+        @Override
+        public int getNumberOfCorners() {
+            return 4;
+        }
     }
 }

@@ -1,4 +1,4 @@
-package annotations.annotations;
+package annotations.test.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface InitializerClass {
+public @interface ScanPackages {
+    String[] value();
 }

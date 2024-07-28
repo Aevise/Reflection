@@ -1,13 +1,11 @@
 package fields.arrays;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 
 public class getArrayElement {
 
     public static void main(String[] args) throws IllegalAccessException {
-        int [] input = new int[] {0, 10, 20, 30, 40};
+        int[] input = new int[]{0, 10, 20, 30, 40};
 
         getArrayElement getArrayElement = new getArrayElement();
         System.out.println(getArrayElement.getArrayElement(input, 0));
@@ -23,8 +21,8 @@ public class getArrayElement {
         System.out.println(getArrayElement.getArrayElement(input, -4));
     }
 
-    public Object getArrayElement(Object array, int index){
-        if(array.getClass().isArray()){
+    public Object getArrayElement(Object array, int index) {
+        if (array.getClass().isArray()) {
             if (index >= 0) {
                 return Array.get(array, index);
             }

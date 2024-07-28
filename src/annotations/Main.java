@@ -1,9 +1,9 @@
 package annotations;
 
-import annotations.annotations.InitializerClass;
-import annotations.annotations.InitializerMethod;
-import annotations.annotations.RetryOperation;
-import annotations.annotations.ScanPackages;
+import annotations.test.annotations.InitializerClass;
+import annotations.test.annotations.InitializerMethod;
+import annotations.test.annotations.RetryOperation;
+import annotations.test.annotations.ScanPackages;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +27,7 @@ public class Main {
     public static void initialize() throws Throwable {
         ScanPackages annotation = Main.class.getAnnotation(ScanPackages.class);
 
-        if(annotation == null || annotation.value().length == 0){
+        if (annotation == null || annotation.value().length == 0) {
             return;
         }
 
@@ -52,28 +52,28 @@ public class Main {
 
         int numberOfRetries = retryOperation == null ? 0 : retryOperation.numberOfRetries();
 
-        while (true){
+        while (true) {
             try {
                 method.invoke(instance);
                 break;
-            }catch (InvocationTargetException e){
+            } catch (InvocationTargetException e) {
                 Throwable targetException = e.getTargetException();
 
-                if(numberOfRetries > 0 && Set.of(retryOperation.retryExceptions()).contains(targetException.getClass())){
+                if (numberOfRetries > 0 && Set.of(retryOperation.retryExceptions()).contains(targetException.getClass())) {
                     numberOfRetries--;
 
                     System.out.println("Retrying...");
                     Thread.sleep(retryOperation.durationBetweenRetriesMs());
                 } else if (retryOperation != null) {
                     throw new Exception(retryOperation.failureMessage(), targetException);
-                }else {
+                } else {
                     throw targetException;
                 }
             }
         }
     }
 
-    private static List<Class<?>> getAllClasses(String ... packageNames) throws IOException, ClassNotFoundException, URISyntaxException {
+    private static List<Class<?>> getAllClasses(String... packageNames) throws IOException, ClassNotFoundException, URISyntaxException {
         List<Class<?>> allClasses = new ArrayList<>();
 
         for (String packageName : packageNames) {
@@ -81,10 +81,10 @@ public class Main {
 
             URI packageUri = Main.class.getResource(packageRelativePath).toURI();
 
-            if(packageUri.getScheme().equals("file")){
+            if (packageUri.getScheme().equals("file")) {
                 Path packageFullPath = Paths.get(packageUri);
                 allClasses.addAll(getAllPackageClasses(packageFullPath, packageName));
-            }else if (packageUri.getScheme().equals("jar")){
+            } else if (packageUri.getScheme().equals("jar")) {
                 FileSystem fileSystem = FileSystems.newFileSystem(packageUri, Collections.emptyMap());
 
                 Path packageFullPathJar = fileSystem.getPath(packageRelativePath);

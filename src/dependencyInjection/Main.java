@@ -29,9 +29,9 @@ public class Main {
         return (T) constructor.newInstance(constructorArguments.toArray());
     }
 
-    private static Constructor<?> getFirstConstructor(Class<?> clazz){
+    private static Constructor<?> getFirstConstructor(Class<?> clazz) {
         Constructor<?>[] declaredConstructors = clazz.getDeclaredConstructors();
-        if(declaredConstructors.length == 0){
+        if (declaredConstructors.length == 0) {
             throw new IllegalStateException(String.format("No constructor has been found for class %s", clazz.getName()));
         }
         return declaredConstructors[0];

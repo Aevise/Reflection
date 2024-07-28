@@ -24,7 +24,7 @@ public class Main {
         System.out.println(config2);
     }
 
-    public static  <T> T createConfigObject(Class<T> clazz, Path filePath)
+    public static <T> T createConfigObject(Class<T> clazz, Path filePath)
             throws IOException, NoSuchMethodException,
             InvocationTargetException, InstantiationException,
             IllegalAccessException {
@@ -36,7 +36,7 @@ public class Main {
 
         T configInstance = (T) declaredConstructor.newInstance();
 
-        while (scanner.hasNextLine()){
+        while (scanner.hasNextLine()) {
             String configLine = scanner.nextLine();
 
             String[] nameValuePair = configLine.split("=");
@@ -44,26 +44,26 @@ public class Main {
             String propertyValue = nameValuePair[1];
 
             Field declaredField = null;
-            try{
+            try {
                 declaredField = clazz.getDeclaredField(propertyName);
-            }catch (NoSuchFieldException e){
+            } catch (NoSuchFieldException e) {
                 System.out.println("Property name: " + declaredField + " is unsupported");
                 continue;
             }
 
             declaredField.setAccessible(true);
             Object parsedValue;
-            if(declaredField.getType().isArray()){
+            if (declaredField.getType().isArray()) {
                 parsedValue = parseArray(declaredField.getType().getComponentType(), propertyValue);
-            }else {
-               parsedValue = parseValue(declaredField.getType(), propertyValue);
+            } else {
+                parsedValue = parseValue(declaredField.getType(), propertyValue);
             }
             declaredField.set(configInstance, parsedValue);
         }
         return configInstance;
     }
 
-    private static Object parseArray(Class<?> arrayElementType, String value){
+    private static Object parseArray(Class<?> arrayElementType, String value) {
         String[] elementValues = value.split(",");
 
         Object newArray = Array.newInstance(arrayElementType, elementValues.length);
@@ -75,7 +75,7 @@ public class Main {
     }
 
     private static Object parseValue(Class<?> type, String propertyValue) {
-        if(type.equals(int.class)){
+        if (type.equals(int.class)) {
             return Integer.parseInt(propertyValue);
         } else if (type.equals(short.class)) {
             return Short.parseShort(propertyValue);
